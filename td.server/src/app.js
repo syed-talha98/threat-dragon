@@ -1,26 +1,25 @@
 import express from 'express';
 import path from 'path';
 import rateLimit from 'express-rate-limit';
-
 import env from './env/Env.js';
 import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
-import https from './config/https.config.js';
+import httpConfig from './config/http.config.js'; // HTTPS configuration
 import loggerHelper from './helpers/logger.helper.js';
 import parsers from './config/parsers.config.js';
 import routes from './config/routes.config.js';
 import securityHeaders from './config/securityheaders.config.js';
+import domainController from './controllers/domain.js';
 import { upDir } from './helpers/path.helper.js';
 
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 const docsDir = path.join(__dirname, upDir, upDir, 'docs');
 
-// set up rate limiter: maximum of 6000 requests per 30 minute interval
 const limiter = rateLimit({
-    windowMs: 30 * 60 * 1000, // 10 minutes
+    windowMs: 30 * 60 * 1000,
     max: 6000,
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false // Disable the `X-RateLimit-*` headers
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 const create = () => {
@@ -28,50 +27,81 @@ const create = () => {
 
     try {
         envConfig.tryLoadDotEnv();
-        // logging environment, env will always supply a value
         loggerHelper.level(env.get().config.LOG_LEVEL);
         logger = loggerHelper.get('app.js');
 
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
-        // rate limiting only for production environemnts, otherwise automated e2e tests fail
+
+        // Apply rate limiting in production
         if (process.env.NODE_ENV === 'production') {
             app.use(limiter);
-            logger.info('Apply rate limiting in production environments');
+            logger.info('Rate limiting applied for production environments.');
         } else {
-            logger.warn('Rate limiting disabled for development environments');
+            logger.warn('Rate limiting disabled for development environments.');
         }
 
-        // security headers
+        // Configure security headers
         securityHeaders.config(app);
 
-        // Force HTTPS in production
-        app.use(https.middleware);
-
-        // static content
+        // Serve static files
         app.use('/public', express.static(siteDir));
         app.use('/docs', express.static(docsDir));
 
-        // parsers
+        // Configure parsers
         parsers.config(app);
 
-        // routes
+        // Configure routes
         routes.config(app);
 
-        // env will always supply a value for the PORT
-        app.set('port', env.get().config.PORT);
-        logger.info('Express server listening on ' + app.get('port'));
+        // TLS setup
+        if (process.env.APP_USE_TLS === 'true') {
+            const certPath = process.env.APP_TLS_CERT_PATH;
+            const keyPath = process.env.APP_TLS_KEY_PATH;
+            const domain = process.env.APP_TLS_HOSTNAME;
 
-        logger.info('OWASP Threat Dragon application started');
+            if (!certPath || !keyPath || !domain) {
+                logger.error(
+                    'TLS setup failed. APP_TLS_CERT_PATH, APP_TLS_KEY_PATH, or APP_TLS_HOSTNAME is missing.'
+                );
+                throw new Error('Missing TLS configuration.');
+            }
+
+            const isDomainValid = domainController.verifyDomain(keyPath, certPath, domain);
+            if (!isDomainValid) {
+                logger.error(`Domain ${domain} is invalid for the provided certificate.`);
+                throw new Error('Invalid domain for TLS configuration.');
+            }
+
+            logger.info(`Domain ${domain} verified for TLS setup.`);
+            try {
+                const httpsServer = httpConfig.createServer(app); // Create HTTPS server
+                httpsServer.listen(app.get('port'), () => {
+                    logger.info(`HTTPS server listening on port ${app.get('port')}`);
+                });
+            } catch (e) {
+                logger.error('Failed to start HTTPS server:', e.message);
+                throw e;
+            }
+        } else {
+            // Fallback to HTTP if TLS is not configured
+            app.listen(app.get('port'), () => {
+                logger.info(`HTTP server listening on port ${app.get('port')}`);
+            });
+        }
+
+        logger.info('Express server setup completed.');
         return app;
     } catch (e) {
-        if (!logger) { logger = console; }
-        logger.error('OWASP Threat Dragon failed to start');
+        if (!logger) {
+            logger = console;
+        }
+        logger.error('OWASP Threat Dragon failed to start.');
         logger.error(e.message);
         throw e;
     }
 };
 
 export default {
-    create
+    create,
 };
