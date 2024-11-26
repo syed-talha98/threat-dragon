@@ -43,12 +43,12 @@ const create = () => {
         securityHeaders.config(app);
 
         // Attempt to use TLS certificates if available
-        
+        const useTLS = process.env.APP_USE_TLS === 'true';
         const certPath = process.env.APP_TLS_CERT_PATH;
         const keyPath = process.env.APP_TLS_KEY_PATH;
         const domain = process.env.APP_TLS_HOSTNAME;
 
-        if (certPath && keyPath && domain) {
+        if (useTLS && certPath && keyPath && domain) {
             // Verify the domain if all TLS variables are set
             const isDomainValid = domainController.verifyDomain(keyPath, certPath, domain);
             if (isDomainValid) {
