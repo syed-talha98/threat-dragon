@@ -1,10 +1,6 @@
-// import loggerHelper from '../helpers/logger.helper.js';
 const fs = require('fs');
 const tls = require('tls');
 const crypto = require("crypto")
-
-
-// const logger = loggerHelper.get('controllers/homecontroller.js');
 
 /**
   Verifies a domain against a certificate
@@ -22,18 +18,13 @@ const verifyDomain = (keyPath, certPath, domain) => {
   
       // Parse the certificate
       const parsedCert = new crypto.X509Certificate(Buffer.from(cert));
-      console.log(parsedCert, "Parsed Certificate");
   
       const commonNameField = parsedCert.subject.split(',').find(field => field.includes('CN='));
       const commonName = commonNameField ? commonNameField.replace('CN=', '').trim() : null;
-      console.log(commonName, "Extracted Common Name");
   
       const subjectAltNames = parsedCert.subjectAltName
         ? parsedCert.subjectAltName.split(',').map(name => name.replace('DNS:', '').trim())
         : [];
-      console.log(subjectAltNames, "Extracted Subject Alternative Names");
-  
-      console.log(domain, "Domain to Verify");
   
       // Check if the domain matches the
       if (commonName === domain || subjectAltNames.includes(domain)) {
