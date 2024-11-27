@@ -52,10 +52,10 @@ const create = () => {
             // Verify the domain if all TLS variables are set
             const isDomainValid = domainController.verifyDomain(keyPath, certPath, domain);
             if (isDomainValid) {
-                // Create the HTTPS server
-                httpsConfig.createServer(app).listen(app.get('port'), () => {
-                    logger.info(`HTTPS server listening on port ${app.get('port')}`);
-                });
+                const httpsPort = process.env.APP_PORT || 443;
+                app.set('port', httpsPort);
+                app.set('httpsRunning', true);
+                httpsConfig.createServer(app, httpsPort);
                 return app;
             } else {
                 // Log the domain error

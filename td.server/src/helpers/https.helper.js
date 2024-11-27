@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const createServer = (app) => {
+const createServer = (app, port) => {
     const certPath = process.env.APP_TLS_CERT_PATH;
     const keyPath = process.env.APP_TLS_KEY_PATH;
 
@@ -13,6 +13,9 @@ const createServer = (app) => {
 
     const httpsServer = require('https').createServer({ key, cert }, app);
     console.log ("HTTPS server has been created.")
+    httpsServer.listen(port, () => {
+        console.log(`HTTPS server listening on port ${port}`);
+    });
     return httpsServer;
 };
 
