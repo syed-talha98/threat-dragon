@@ -23,7 +23,7 @@ const devServerConfig = hasTlsCredentials
       port: process.env.APP_PORT,
       proxy: {
         '^/api': {
-            target: `${vueProtocol}://${domainName}:${serverApiPort}`, 
+            target: `${serverApiProtocol}://${domainName}:${serverApiPort}`, 
           ws: true,
           changeOrigin: true,
         },
