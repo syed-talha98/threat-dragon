@@ -4,6 +4,7 @@ const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
+const vueProtocol = process.env.VUE_PROTOCOL;
 const serverApiPort = process.env.PORT || '3000';
 const domainName = process.env.APP_TLS_HOSTNAME;
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
@@ -22,7 +23,7 @@ const devServerConfig = hasTlsCredentials
       port: process.env.APP_PORT,
       proxy: {
         '^/api': {
-            target: `${serverApiProtocol}://${domainName}:${serverApiPort}`, 
+            target: `${vueProtocol}://${domainName}:${serverApiPort}`, 
           ws: true,
           changeOrigin: true,
         },
