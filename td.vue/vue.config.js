@@ -22,9 +22,7 @@ const devServerConfig = hasTlsCredentials
       port: process.env.APP_PORT,
       proxy: {
         '^/api': {
-            target: process.env.NODE_ENV === 'production' 
-            ? `${serverApiProtocol}://${domainName}:${serverApiPort}`  // Use domainName in production
-            : `${serverApiProtocol}://localhost:${serverApiPort}`, 
+            target: `${serverApiProtocol}://${domainName}:${serverApiPort}`, 
           ws: true,
           changeOrigin: true,
         },
@@ -35,9 +33,7 @@ const devServerConfig = hasTlsCredentials
     port: 8080,  
     proxy: {
         '^/api': {
-            target: process.env.NODE_ENV === 'production' 
-            ? `${serverApiProtocol}://${domainName}:${serverApiPort}`  // Use domainName in production
-            : `${serverApiProtocol}://localhost:${serverApiPort}`, 
+          target: `${serverApiProtocol}://${domainName}:${serverApiPort}`, 
           ws: true,
           changeOrigin: true,
         },
