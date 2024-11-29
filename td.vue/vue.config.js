@@ -4,6 +4,7 @@ const { CycloneDxWebpackPlugin } = require('@cyclonedx/webpack-plugin');
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.PORT || '3000';
+onst appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
@@ -12,7 +13,7 @@ module.exports = {
         client: {
             webSocketURL: {
                 protocol: 'wss', // Use secure WebSocket protocol
-                hostname: 'td.devflovv.com', // Replace with your domain
+                hostname: appHostname,
                 port: 443, // HTTPS port
             },
         },
@@ -23,7 +24,7 @@ module.exports = {
                 changeOrigin: true,
             },
         },
-        allowedHosts: "all",
+        allowedHosts: [appHostname],
     },
     lintOnSave: false,
     pluginOptions: {
