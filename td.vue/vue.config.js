@@ -28,6 +28,7 @@ const devServerConfig = hasTlsCredentials
           changeOrigin: true,
         },
       },
+      allowedHosts: 'all',
     }
   : {
     
@@ -39,6 +40,7 @@ const devServerConfig = hasTlsCredentials
           changeOrigin: true,
         },
       },
+      allowedHosts: 'all',
     };
     port = devServerConfig.port;
 
