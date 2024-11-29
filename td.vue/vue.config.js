@@ -5,18 +5,25 @@ require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname,
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.PORT || '3000';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
-
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
     productionSourceMap: false,
     devServer: {
+        client: {
+            webSocketURL: {
+                protocol: 'wss', // Use secure WebSocket protocol
+                hostname: 'td.devflovv.com', // Replace with your domain
+                port: 443, // HTTPS port
+            },
+        },
         proxy: {
             '^/api': {
-                target: serverApiProtocol + '://localhost:' + serverApiPort,
-                ws: true,
-                changeOrigin: true
-            }
-        }
+                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                ws: true, // Proxy WebSocket connections
+                changeOrigin: true,
+            },
+        },
+        allowedHosts: "all",
     },
     lintOnSave: false,
     pluginOptions: {
