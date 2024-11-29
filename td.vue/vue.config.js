@@ -23,7 +23,7 @@ const devServerConfig = hasTlsCredentials
       port: process.env.APP_PORT,
       proxy: {
         '^/api': {
-            target: serverApiProtocol + '://localhost:' + serverApiPort, 
+          target: 'https' + '://localhost:' + serverApiPort, 
           ws: true,
           changeOrigin: true,
         },
