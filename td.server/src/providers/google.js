@@ -6,7 +6,7 @@ import axios from 'axios';
 import env from '../env/Env.js';
 
 const name = 'google';
-const hostName= process.env.APP_HOSTNAME || 'http://localhost:8080'
+const hostName= env.get().config.APP_HOSTNAME;
 
 /**
  * Determines if the Google provider is configured
