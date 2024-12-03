@@ -6,7 +6,7 @@ import axios from 'axios';
 import env from '../env/Env.js';
 
 const name = 'google';
-const hostName= env.get().config.APP_HOSTNAME;
+// const hostName= process.env.APP_HOSTNAME || 'http://localhost:8080'
 
 /**
  * Determines if the Google provider is configured
@@ -32,7 +32,7 @@ const getOauthRedirectUrl = () => {
 const getOauthReturnUrl = (code) => {
     let returnUrl = `/#/oauth-return?code=${code}`;
     if (env.get().config.NODE_ENV === 'development') {
-        returnUrl = `${hostName}${returnUrl}`;
+        returnUrl = `https://threatdragon.ericfitz.net${returnUrl}`;
     }
     return returnUrl;
 };
