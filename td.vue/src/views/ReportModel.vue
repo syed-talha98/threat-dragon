@@ -2,12 +2,10 @@
     <div class="td-report">
         <b-row class="no-print td-report-options sticky">
             <b-col>
-                <b-form class="">
+                <b-form>
                     <b-form-row>
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="model-group">
+                            <b-form-group label-cols="auto" id="model-group">
                                 <b-form-checkbox
                                     id="show_models"
                                     v-model="display.diagrams"
@@ -16,9 +14,7 @@
                         </b-col>
 
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="mitigated-group">
+                            <b-form-group label-cols="auto" id="mitigated-group">
                                 <b-form-checkbox
                                     id="show_mitigated"
                                     v-model="display.mitigated"
@@ -27,9 +23,7 @@
                         </b-col>
 
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="outofscope-group">
+                            <b-form-group label-cols="auto" id="outofscope-group">
                                 <b-form-checkbox
                                     id="show_outofscope"
                                     v-model="display.outOfScope"
@@ -38,9 +32,7 @@
                         </b-col>
 
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="empty-group">
+                            <b-form-group label-cols="auto" id="empty-group">
                                 <b-form-checkbox
                                     id="show_empty"
                                     v-model="display.empty"
@@ -49,9 +41,7 @@
                         </b-col>
 
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="branding-group">
+                            <b-form-group label-cols="auto" id="branding-group">
                                 <b-form-checkbox
                                     id="show_branding"
                                     v-model="display.branding"
@@ -60,9 +50,7 @@
                         </b-col>
 
                         <b-col>
-                            <b-form-group
-                                label-cols="auto"
-                                id="properties-group">
+                            <b-form-group label-cols="auto" id="properties-group">
                                 <b-form-checkbox
                                     id="show_attributes"
                                     v-model="display.properties"
@@ -145,7 +133,6 @@
 </style>
 
 <style lang="scss" scoped>
-
 .td-branding {
     padding-left: 50px;
 }
@@ -166,7 +153,7 @@
     position: sticky;
     top: 55px;
     margin-top: -5px;
-    background-color: $white;
+    background-color: var(--white);
     padding-top: 15px;
     z-index: 100;
 }
@@ -230,10 +217,8 @@ export default {
         }),
         diagrams: function () {
             const sortedDiagrams = this.model.detail.diagrams.slice().sort((a, b) => {
-                if (a.title < b.title)
-                    return -1;
-                if (a.title > b.title)
-                    return 1;
+                if (a.title < b.title) return -1;
+                if (a.title > b.title) return 1;
                 return 0;
             });
             return sortedDiagrams;
@@ -256,5 +241,4 @@ export default {
         }
     }
 };
-
 </script>

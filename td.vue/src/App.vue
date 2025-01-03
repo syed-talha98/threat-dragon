@@ -10,6 +10,7 @@
 </template>
 
 <style lang="scss">
+@import '@/styles/sizes.scss'; /* Import the file containing $header-height */
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
 
 #app {
@@ -26,15 +27,15 @@ import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import TdNavbar from '@/components/Navbar.vue';
 
 export default {
-    name: 'TdApp',
-    components: {
-        TdNavbar
-    },
-    computed: mapState({
-        isLoading: (state) => state.loader.loading
-    }),
-    mounted() {
-        this.$store.dispatch(LOADER_FINISHED);
-    }
+  name: 'TdApp',
+  components: {
+    TdNavbar,
+  },
+  computed: mapState({
+    isLoading: (state) => state.loader.loading,
+  }),
+  mounted() {
+    this.$store.dispatch(LOADER_FINISHED);
+  },
 };
 </script>

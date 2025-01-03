@@ -36,15 +36,15 @@
                             </a>
                         </h6>
                     </template>
-                    <h6 v-if=diagram.description class="diagram-description-text">
+                    <h6 v-if="diagram.description" class="diagram-description-text">
                         <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
                             {{ diagram.description }}
                         </a>
                     </h6>
                     <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
+                        <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
-                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
+                            :src="getThumbnailUrl(diagram)"
                             :alt="diagram.title" />
                     </a>
                 </b-card>
@@ -76,10 +76,13 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss'; /* Import the SCSS file with color variables */
+
 .tm-card {
     font-size: 14px;
     white-space: pre-wrap;
 }
+
 .diagram-header-text a {
     color: $black;
 }
@@ -129,9 +132,9 @@ export default {
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {
-                return '../assets/thumbnail.jpg';
+                return require('@/assets/thumbnail.jpg');
             }
-            return `../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
+            return require(`@/assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`);
         },
         editDiagram(diagram) {
             this.$store.dispatch(tmActions.diagramSelected, diagram);
@@ -140,13 +143,11 @@ export default {
         }
     },
     mounted() {
-        // make sure we are compatible with version 1.x and early 2.x
         let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
         let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
         let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         console.debug('updates: ' + JSON.stringify(update));
         this.$store.dispatch(tmActions.update, update);
-        // if a diagram has just been closed, the history insists on marking the model as modified
         this.$store.dispatch(tmActions.notModified);
     }
 };

@@ -40,7 +40,7 @@
                                     :type="threat.type"
                                     :mitigation="threat.mitigation"
                                     :modelType="threat.modelType"
-                                    :number=threat.number
+                                    :number="threat.number"
                                     @threatSelected="threatSelected" />
                             </b-col>
                         </b-row>
@@ -72,8 +72,10 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss'; /* Import SCSS variables */
+
 .new-threat-by-type {
-    color: $orange;
+    color: $orange; /* Use imported SCSS variable */
     font-size: 16px;
     padding: 15px;
 }
@@ -129,28 +131,27 @@ export default {
         init() {
             this.$store.dispatch(CELL_UNSELECTED);
         },
-        threatSelected(threatId,state) {
+        threatSelected(threatId, state) {
             console.debug('selected threat ID: ' + threatId);
-            this.$emit('threatSelected', threatId,state);
+            this.$emit('threatSelected', threatId, state);
         },
         newThreat() {
-            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);
+            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type, this.threatTop + 1);
             console.debug('new threat ID: ' + threat.id);
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
-            this.$store.dispatch(tmActions.update, { threatTop: this.threatTop+1 });
+            this.$store.dispatch(tmActions.update, { threatTop: this.threatTop + 1 });
             this.$store.dispatch(tmActions.modified);
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
-            this.threatSelected(threat.id,'new');
+            this.threatSelected(threat.id, 'new');
         },
-        AddThreatByType(){
-            this.$emit('threatSuggest','type');
+        AddThreatByType() {
+            this.$emit('threatSuggest', 'type');
         },
-        AddThreatByContext(){
-            this.$emit('threatSuggest','context');
+        AddThreatByContext() {
+            this.$emit('threatSuggest', 'context');
         }
     },
 };
-
 </script>

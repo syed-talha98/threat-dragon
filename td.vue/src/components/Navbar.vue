@@ -9,10 +9,10 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item>
-            <td-locale-select />
+          <td-locale-select />
         </b-nav-item>
       </b-navbar-nav>
-      
+
       <b-navbar-nav class="ml-auto">
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
@@ -52,7 +52,7 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')"/>
+          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -60,12 +60,15 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss'; /* Import colors */
+@import '@/styles/sizes.scss'; /* Import sizes */
+
 $icon-height: 1.2rem;
 
 .navbar {
   background-color: $orange;
   border-color: $orange-alt;
-  height: $header-height+10;
+  height: $header-height + 10;
   font-size: 15px;
 }
 
@@ -91,24 +94,24 @@ $icon-height: 1.2rem;
   }
 }
 
-@media (max-width: 576px) { /* This is the typical breakpoint for phones */
+@media (max-width: 576px) { /* Mobile breakpoint */
   .nav-link {
-  color: red !important;
+    color: red !important;
   }
   .logged-in-as {
     background-color: $orange;
     border-radius: 5px;
-    padding:10px;
+    padding: 10px;
   }
 }
+
 @media (max-width: 576px) {
-  .td-owasp-logo { /* Target the OWASP logo */
+  .td-owasp-logo { /* OWASP logo styling */
     background-color: red;
     border-radius: 50%;
     padding: 5px;
   }
-  }
-
+}
 </style>
 
 <script>
@@ -118,25 +121,23 @@ import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
-    name: 'TdNavbar',
-    components: {
-        TdLocaleSelect
-    },
-    computed: {
-        ...mapGetters([
-            'username'
-        ])
-    },
-    methods: {
-        onLogOut(evt) {
-            evt.preventDefault();
-            this.$store.dispatch(LOGOUT);
-            this.$router.push('/').catch(error => {
-                if (error.name != 'NavigationDuplicated') {
-                    throw error;
-                }
-            });
+  name: 'TdNavbar',
+  components: {
+    TdLocaleSelect,
+  },
+  computed: {
+    ...mapGetters(['username']),
+  },
+  methods: {
+    onLogOut(evt) {
+      evt.preventDefault();
+      this.$store.dispatch(LOGOUT);
+      this.$router.push('/').catch((error) => {
+        if (error.name != 'NavigationDuplicated') {
+          throw error;
         }
-    }
+      });
+    },
+  },
 };
 </script>

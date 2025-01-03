@@ -23,7 +23,8 @@ module.exports = {
         'style-resources-loader': {
             preProcessor: 'scss',
             patterns: [
-                path.resolve(__dirname, 'src', 'styles', '*.scss')
+                path.resolve(__dirname, 'src', 'styles', 'colors.scss'), // Include colors.scss
+                path.resolve(__dirname, 'src', 'styles', 'sizes.scss')   // Include sizes.scss
             ]
         },
         electronBuilder: {

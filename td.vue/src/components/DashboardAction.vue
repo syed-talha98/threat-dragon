@@ -1,20 +1,21 @@
-<template>    
+<template>
     <b-col lg>
-    <router-link :to="to" class="action-pane-link">
-        <b-jumbotron class="text-center action-pane">
+        <router-link :to="to" class="action-pane-link">
+            <b-jumbotron class="text-center action-pane">
                 <font-awesome-icon
-                :icon="[iconPreface, icon]"
-                size="4x"
-                class="action-icon"
+                    :icon="[iconPreface, icon]"
+                    size="4x"
+                    class="action-icon"
                 ></font-awesome-icon>
-            <br />
-            {{ $t(`dashboard.actions.${description}`) }}
-        </b-jumbotron>
-            </router-link>
+                <br />
+                {{ $t(`dashboard.actions.${description}`) }}
+            </b-jumbotron>
+        </router-link>
     </b-col>
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss'; /* Import the file containing $orange */
 .action-icon {
     color: $orange;
     margin-bottom: 15px;
@@ -24,8 +25,8 @@
     min-height: 100%;
     margin-bottom: 0px;
 }
-.action-pane:hover{
-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+.action-pane:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .action-pane-link:hover {
     text-decoration: none;

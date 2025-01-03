@@ -9,7 +9,7 @@
                 </b-jumbotron>
             </b-col>
         </b-row>
-        <b-row >
+        <b-row>
             <td-dashboard-action class="dashboard-action"
                 v-for="(action, idx) in actions"
                 :key="idx"
@@ -24,14 +24,13 @@
 
 <style lang="scss" scoped>
 .action-icon {
-    color: $orange;
+    color: var(--orange); /* Updated to use CSS custom property */
     margin-bottom: 15px;
 }
 
 .dashboard-action {
     padding-bottom: 2rem;
 }
-
 </style>
 
 <script>
