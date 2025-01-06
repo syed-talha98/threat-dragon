@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -33,7 +32,7 @@ import {
     faDiagramProject,
 } from '@fortawesome/free-solid-svg-icons';
 
-import {faBitbucket, faGithub, faGitlab, faVuejs, faGoogle, faGoogleDrive} from '@fortawesome/free-brands-svg-icons';
+import { faBitbucket, faGithub, faGitlab, faVuejs, faGoogle, faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 
 // Add icons to the library for use
 library.add(
@@ -72,4 +71,9 @@ library.add(
     faGoogleDrive
 );
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+export default {
+    install(app) {
+        // Register the FontAwesomeIcon component globally
+        app.component('font-awesome-icon', FontAwesomeIcon);
+    },
+};

@@ -1,8 +1,6 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
-import { gitRoutes } from './git.js';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
+import { gitRoutes } from './git.js';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
@@ -31,17 +29,12 @@ const routes = [
     ...desktopRoutes,
     ...gitRoutes,
     ...localRoutes,
-    ...googleRoutes
+    ...googleRoutes,
 ];
 
-const get = () => {
-    Vue.use(VueRouter);
-    const router = new VueRouter({
-        routes
-    });
-    return router;
-};
+const router = createRouter({
+    history: createWebHistory(),
+    routes
+});
 
-export default {
-    get
-};
+export default router;
