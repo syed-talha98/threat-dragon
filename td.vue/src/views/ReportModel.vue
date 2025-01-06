@@ -62,7 +62,7 @@
             </b-col>
 
             <b-col class="text-right right">
-                <b-btn-group>
+                <BButtonGroup>
                     <td-form-button
                         id="td-print-pdf-btn"
                         :onBtnClick="printPdf"
@@ -80,7 +80,7 @@
                         :onBtnClick="onCloseClick"
                         icon="times"
                         :text="$t('forms.close')" />
-                </b-btn-group>
+                </BButtonGroup>
             </b-col>
         </b-row>
 

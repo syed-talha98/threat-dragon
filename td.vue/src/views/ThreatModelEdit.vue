@@ -147,7 +147,7 @@
 
                     <b-form-row>
                         <b-col class="text-right mt-5">
-                            <b-btn-group>
+                            <BButtonGroup>
                                 <td-form-button
                                     id="td-save-btn"
                                     :isPrimary="true"
@@ -164,7 +164,7 @@
                                     :onBtnClick="onCloseClick"
                                     icon="times"
                                     :text="$t('forms.close')" />
-                            </b-btn-group>
+                            </BButtonGroup>
                         </b-col>
                     </b-form-row>
 

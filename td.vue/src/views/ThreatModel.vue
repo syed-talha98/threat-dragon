@@ -52,7 +52,7 @@
         </b-row>
         <b-row>
             <b-col class="text-right">
-                <b-btn-group>
+                <BButtonGroup>
                     <td-form-button
                         id="td-edit-btn"
                         :isPrimary="true"
@@ -69,7 +69,7 @@
                         :onBtnClick="onCloseClick"
                         icon="times"
                         :text="$t('forms.closeModel')" />
-                </b-btn-group>
+                </BButtonGroup>
             </b-col>
         </b-row>
     </div>
