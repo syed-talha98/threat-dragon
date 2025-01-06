@@ -2,11 +2,11 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="jumbotron text-center">
                     <h4>
                         {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>

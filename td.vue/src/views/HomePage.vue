@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
+        <div class="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
@@ -8,7 +8,7 @@
             </b-row>
             <b-row>
                 <b-col md="4">
-                    <b-img class="td-cupcake"
+                    <BImg class="td-cupcake"
                            id="home-td-logo"
                            :alt="$t('home.imgAlt')"
                            src="@/assets/threatdragon_logo_image.svg"
@@ -31,7 +31,7 @@
                     </b-row>
                 </b-col>
             </b-row>
-        </b-jumbotron>
+        </div>
     </b-container>
 </template>
 
