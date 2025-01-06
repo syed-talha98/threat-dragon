@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-// Import specific icons that we want here
+// Import specific icons
 import {
     faSignOutAlt,
     faQuestionCircle,
@@ -34,7 +34,7 @@ import {
 
 import { faBitbucket, faGithub, faGitlab, faVuejs, faGoogle, faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 
-// Add icons to the library for use
+// Add icons to the library
 library.add(
     faSignOutAlt,
     faQuestionCircle,

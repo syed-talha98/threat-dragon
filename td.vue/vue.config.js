@@ -119,19 +119,18 @@ module.exports = {
       },
     },
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap(options => {
-        options.source = 'src';
-        options.img = 'src';
-        options.image = 'xlink:href';
-        options['b-img'] = 'src';
-        options['b-img-lazy'] = ['src', 'blank-src'];
-        return options;
-      });
-  },
+        .rule('vue')
+        .use('vue-loader')
+        .tap((options) => {
+            options.compilerOptions = {
+                ...options.compilerOptions,
+                isCustomElement: (tag) => tag.startsWith('b-'),
+            };
+            return options;
+        });
+},
   configureWebpack: {
     devtool: 'source-map',
     plugins: [

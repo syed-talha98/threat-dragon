@@ -35,4 +35,4 @@ const store = createStore({
     plugins: [vuexPersist.session.plugin],
 });
 
-export default store; // Export the store directly
+export default store;
