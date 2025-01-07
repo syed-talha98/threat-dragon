@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
     <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
-      <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+      <b-img :src="require('@/assets/threatdragon_logo_image.svg')" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{this.$store.state.packageBuildVersion}}{{this.$store.state.packageBuildState}}
     </b-navbar-brand>
 
@@ -19,7 +19,7 @@
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('nav.logOut')"
+           v-b-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -52,7 +52,9 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
+          <b-img 
+          :src="require('@/assets/owasp.svg')"
+          class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>

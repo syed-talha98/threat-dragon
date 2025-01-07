@@ -8,10 +8,10 @@
             </b-row>
             <b-row>
                 <b-col md="4">
-                    <BImg class="td-cupcake"
+                    <b-img class="td-cupcake"
                            id="home-td-logo"
                            :alt="$t('home.imgAlt')"
-                           src="@/assets/threatdragon_logo_image.svg"
+                            :src="require('@/assets/threatdragon_logo_image.svg')"
                     />
                 </b-col>
                 <b-col md="8">
