@@ -6,7 +6,8 @@ import store from './store/index.js';
 import bootstrapVue from './plugins/bootstrap-vue'; // BootstrapVue plugin
 import fontAwesome from './plugins/fontawesome-vue'; // FontAwesome plugin
 
-import './plugins/toastification.js'; // Toast notifications setup
+import ToastPlugin from 'vue-toast-notification';  //updated Toast notifications setup
+
 
 const app = createApp(App);
 
@@ -16,6 +17,7 @@ app.use(store); // Vuex Store
 app.use(i18nFactory.get()); // i18n (Internationalization)
 app.use(bootstrapVue); // BootstrapVueNext plugin
 app.use(fontAwesome); // FontAwesome plugin
+app.use(ToastPlugin);
 
 // Mount the app
 app.mount('#app');
