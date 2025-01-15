@@ -76,7 +76,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/colors.scss'; /* Import the SCSS file with color variables */
+@use '@/styles/colors.scss' as colors; /* Import the SCSS file with color variables */
 
 .tm-card {
     font-size: 14px;
@@ -84,11 +84,11 @@
 }
 
 .diagram-header-text a {
-    color: $black;
+    color: colors.$black;
 }
 
 .diagram-description-text a {
-    color: $black;
+    color: colors.$black;
 }
 
 .td-diagram-thumb {

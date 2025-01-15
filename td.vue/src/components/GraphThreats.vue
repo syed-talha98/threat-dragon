@@ -49,7 +49,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/colors.scss'; /* Import SCSS variables */
+@use '@/styles/colors.scss' as colors; /* Import SCSS variables */
 
 .threat-card {
     font-size: 14px;
@@ -64,15 +64,15 @@
 }
 
 .green-icon {
-    color: $green; /* Use SCSS variable */
+    color: colors.$green; /* Use SCSS variable */
 }
 
 .red-icon {
-    color: $red; /* Use SCSS variable */
+    color: colors.$red; /* Use SCSS variable */
 }
 
 .yellow-icon {
-    color: $yellow; /* Use SCSS variable */
+    color: colors.$yellow; /* Use SCSS variable */
 }
 </style>
 

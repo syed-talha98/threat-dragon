@@ -29,6 +29,13 @@ const get = () => {
     return i18n;
 };
 
+// Export the get function
 export default {
     get
+};
+
+// Export the tc function
+export const tc = (key) => {
+    const i18nInstance = get();
+    return i18nInstance.global.t(key);
 };

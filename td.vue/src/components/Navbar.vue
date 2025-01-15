@@ -19,7 +19,7 @@
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
-           v-b-tooltip.hover :title="$t('nav.logOut')"
+           v-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -31,7 +31,7 @@
           <font-awesome-icon
             icon="question-circle"
             class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('desktop.help.docs')"
+            v-tooltip.hover :title="$t('desktop.help.docs')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -43,7 +43,7 @@
           <font-awesome-icon
             icon="gift"
             class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('desktop.help.sheets')"
+            v-tooltip.hover :title="$t('desktop.help.sheets')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -61,22 +61,24 @@
   </b-navbar>
 </template>
 
+
+
 <style lang="scss" scoped>
-@import '@/styles/colors.scss'; /* Import colors */
-@import '@/styles/sizes.scss'; /* Import sizes */
+@use '@/styles/sizes.scss' as sizes; /* Import sizes */
+@use '@/styles/colors.scss' as colors; /* Import colors */
 
 $icon-height: 1.2rem;
 
 .navbar {
-  background-color: $orange;
-  border-color: $orange-alt;
-  height: $header-height + 10;
+  background-color: colors.$orange;
+  border-color: colors.$orange-alt;
+  height: sizes.$header-height + 10;
   font-size: 15px;
 }
 
 .nav-link,
 .logged-in-as {
-  color: $white !important;
+  color: colors.$white !important;
 }
 
 .logged-in-as {
@@ -90,18 +92,18 @@ $icon-height: 1.2rem;
 }
 
 .td-brand {
-  color: $white !important;
+  color: colors.$white !important;
   .td-brand-img {
-    max-height: ($header-height - 10);
+    max-height: (sizes.$header-height - 10);
   }
 }
 
 @media (max-width: 576px) { /* Mobile breakpoint */
   .nav-link {
-    color: red !important;
+    color: colors.$red !important;
   }
   .logged-in-as {
-    background-color: $orange;
+    background-color: colors.$orange;
     border-radius: 5px;
     padding: 10px;
   }
@@ -109,12 +111,13 @@ $icon-height: 1.2rem;
 
 @media (max-width: 576px) {
   .td-owasp-logo { /* OWASP logo styling */
-    background-color: red;
+    background-color: colors.$red;
     border-radius: 50%;
     padding: 5px;
   }
 }
 </style>
+
 
 <script>
 import { mapGetters } from 'vuex';

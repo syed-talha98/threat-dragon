@@ -4,6 +4,7 @@ import { gitRoutes } from './git.js';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
+import OAuthReturn from '../views/OauthReturn.vue';
 
 const routes = [
     {
@@ -19,7 +20,7 @@ const routes = [
     {
         path: '/oauth-return',
         name: 'OAuthReturn',
-        component: () => import(/* webpackChunkName: "oauth-return" */ '../views/OauthReturn.vue')
+        component: OAuthReturn,
     },
     {
         path: '/demo/select',

@@ -1,4 +1,5 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
+
 
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';

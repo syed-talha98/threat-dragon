@@ -33,6 +33,7 @@ const getOauthReturnUrl = (code) => {
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
     }
+    console.log (returnUrl, "====")
     return returnUrl;
 };
 

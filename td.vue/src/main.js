@@ -5,8 +5,9 @@ import router from './router/index.js';
 import store from './store/index.js';
 import bootstrapVue from './plugins/bootstrap-vue'; // BootstrapVue plugin
 import fontAwesome from './plugins/fontawesome-vue'; // FontAwesome plugin
-
+import GoogleSignInPlugin from 'vue3-google-signin';
 import ToastPlugin from 'vue-toast-notification';  //updated Toast notifications setup
+import Tooltip from 'primevue/tooltip';
 
 
 const app = createApp(App);
@@ -17,7 +18,11 @@ app.use(store); // Vuex Store
 app.use(i18nFactory.get()); // i18n (Internationalization)
 app.use(bootstrapVue); // BootstrapVueNext plugin
 app.use(fontAwesome); // FontAwesome plugin
+app.use(GoogleSignInPlugin, {
+  clientId: 'put your client i here through env',
+});
 app.use(ToastPlugin);
+app.directive('tooltip', Tooltip);
 
 // Mount the app
 app.mount('#app');
