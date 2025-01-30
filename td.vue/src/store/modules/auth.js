@@ -44,6 +44,12 @@ const mutations = {
     [AUTH_CLEAR]: (state) => clearState(state),
     [AUTH_SET_JWT]: (state, tokens) => {
         try {
+            if (!tokens || !tokens.accessToken || !tokens.refreshToken) {
+                console.error('Invalid tokens received');
+                return;
+            }
+
+
             const { accessToken, refreshToken } = tokens;
             const tokenBody = accessToken.split('.')[1];
             const decodedBody = window.atob(tokenBody);

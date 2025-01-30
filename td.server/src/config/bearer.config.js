@@ -29,7 +29,6 @@ const getBearerToken = (authHeader) => {
 
 const middleware = (req, res, next) => {
     console.log("Middleware invoked...");
-    console.log("Authorization header received:", req.headers.authorization);
 
     const token = getBearerToken(req.headers.authorization);
     if (!token) {

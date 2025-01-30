@@ -9,11 +9,16 @@ import tokenRepo from '../repositories/token.js';
 const logger = loggerHelper.get('controllers/auth.js');
 
 const login = (req, res) => {
+    console.log("login--01")
     logger.debug(`API login request: ${logger.transformToString(req)}`);
 
     try {
+        
         const provider = providers.get(req.params.provider);
+        console.log("login--provider--", provider)
+        console.log("login--02--")
         return responseWrapper.sendResponse(() => provider.getOauthRedirectUrl(), req, res, logger);
+       
     } catch (err) {
         return errors.badRequest(err.message, res, logger);
     }
@@ -21,26 +26,34 @@ const login = (req, res) => {
 
 const oauthReturn = (req, res) => {
     logger.debug(`API oauthReturn request: ${logger.transformToString(req)}`);
-
-    let returnUrl = `/#/oauth-return?code=${req.query.code}`;
+    console.log("01")
+    const provider = 'google';
+    let returnUrl = `/oauth-return?code=${req.query.code}&provider=${provider}`;
+    console.log("02")
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
     }
-    console.log (returnUrl, "---")
+    console.log("03")
+    console.log (returnUrl, "---");
     return res.redirect( returnUrl);
 };
 
+
 const completeLogin = (req, res) => {
+    console.log('Request body:', req.body);
+    console.log('Received authorization code:', req.body.code);
     logger.debug(`API completeLogin request: ${logger.transformToString(req)}`);
 
     try {
+        console.log("login--03")
         const provider = providers.get(req.params.provider);
 
         // Errors in here will return as server errors as opposed to bad requests
         return responseWrapper.sendResponseAsync(async () => {
-            const { user, opts } = await provider.completeLoginAsync(req.query.code);
+            const { user, opts } = await provider.completeLoginAsync(req.body.code);
             const { accessToken, refreshToken } = await jwtHelper.createAsync(provider.name, opts, user);
             tokenRepo.add(refreshToken);
+            console.log("login--04")
             return {
                 accessToken,
                 refreshToken
@@ -72,11 +85,9 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
 }, req, res, logger);
 
 const refresh = (req, res) => {
-    console.log("the refresh comes from here--------")
     logger.debug(`API refresh request: ${logger.transformToString(req)}`);
 
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
-    console.log("the refresh comes from here-hohohohoh-------,tokenBody")
     if (!tokenBody) {
         return errors.unauthorized(res, logger);
     }

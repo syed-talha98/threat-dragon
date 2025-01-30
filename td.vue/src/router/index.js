@@ -4,9 +4,14 @@ import { gitRoutes } from './git.js';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
-import OAuthReturn from '../views/OauthReturn.vue';
+import OAuthCallback from '../views/OAuthCallback.vue';
 
 const routes = [
+    {
+        path: '/oauth-return',
+        name: 'OAuthCallback',
+        component: OAuthCallback,
+    },
     {
         path: '/',
         name: 'HomePage',
@@ -17,11 +22,7 @@ const routes = [
         name: 'MainDashboard',
         component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue')
     },
-    {
-        path: '/oauth-return',
-        name: 'OAuthReturn',
-        component: OAuthReturn,
-    },
+    
     {
         path: '/demo/select',
         name: 'DemoSelect',
@@ -34,8 +35,8 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-});
+    history: createWebHistory(), // This removes the hash from URLs
+    routes,
+  });
 
 export default router;

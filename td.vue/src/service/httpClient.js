@@ -10,19 +10,21 @@ const toast = useToast();
 
 const createClient = () => {
     const client = axios.create();
+    console.log("1")
     client.defaults.headers.common.Accept = 'application/json';
     client.defaults.headers.post['Content-Type'] = 'application/json';
-
+    console.log("2")
     client.interceptors.request.use((config) => {
         store.dispatch(LOADER_STARTED);
 
         if (store.state.auth.jwt) {
             config.headers.authorization = `Bearer ${store.state.auth.jwt}`;
         }
+        console.log("3....", store.state.auth.jwt)
 
         return config;
     }, (err) => {
-        console.error(err);
+        console.error("Request error:",err);
         store.dispatch(LOADER_FINISHED);
         return Promise.reject(err);
     });
@@ -32,7 +34,7 @@ const createClient = () => {
         return resp;
     }, async (err) => {
         const logAndExit = () => {
-            console.error(err);
+            console.error("Request error:",err);
             store.dispatch(LOADER_FINISHED);
             return Promise.reject(err);
         };
@@ -42,17 +44,21 @@ const createClient = () => {
         }
 
         const refreshToken = store.state.auth.refreshToken;
+        console.log("4")
         if (!refreshToken) {
             return logAndExit();
         }
 
         try {
+            console.log("===")
             const response = await axios.post('/api/token/refresh', { refreshToken });
+            console.log("5")
             const tokens = response.data.data;
             store.dispatch(AUTH_SET_JWT, tokens);
             err.config.headers.authorization = `Bearer ${tokens.accessToken}`;
             const retryResp = await axios.request(err.config);
             store.dispatch(LOADER_FINISHED);
+            console.log("6")
             return retryResp;
         } catch (retryError) {
             console.warn('Error retrying after refresh token update');
