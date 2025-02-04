@@ -1,4 +1,5 @@
 import api from './api.js';
+import store from '@/store'; // Import the Vuex store
 
 const resource = '/api/googleproviderthreatmodel';
 
@@ -6,8 +7,12 @@ const resource = '/api/googleproviderthreatmodel';
  * Gets the google drive folders for the given user
  * @returns {Promise}
  */
-const folderAsync = (folderId='root', page = 1) => {
-    return api.getAsync(`${resource}/folders`, { params: { page: page, folderId: folderId } });
+const folderAsync = (folderId = 'root', page = 1, accessToken) => {
+    console.log('folderAsync - Access Token:', accessToken);
+    return api.getAsync(`${resource}/folders`, {
+        params: { page, folderId },
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
 };
 
 const createAsync = (folder, fileContent, fileName) => {

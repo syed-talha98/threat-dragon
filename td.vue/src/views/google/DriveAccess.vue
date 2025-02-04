@@ -43,14 +43,26 @@ export default {
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
-            this.$store.dispatch(providerActions.selected, this.$route.params.provider);
+        this.$store.dispatch(providerActions.selected, this.$route.params.provider);
         }
         let page = 1;
         if (this.$route.query.page) {
-            page = this.$route.query.page;
+           page = this.$route.query.page;
         }
 
-        this.$store.dispatch(folderActions.fetch, { page });
+        const accessToken = this.$store.state.auth.jwt; // Extract the accessToken from the store
+        console.log('Component - Access Token:', accessToken); // Log the accessToken
+        
+        
+        if (!accessToken) {
+          console.error('Access token is missing here');
+          return;
+        }
+
+        this.$store.dispatch(folderActions.types.FOLDER_FETCH, { page: 1, folderId: 'root', accessToken: accessToken  })
+        .catch((error) => {
+            console.error('Error fetching folders:', error);
+        }); // Pass the accessToken
     },
     methods: {
         async onFolderClick(folder) {

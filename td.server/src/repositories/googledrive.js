@@ -20,15 +20,22 @@ const getFolderDetailsAsync = async (folderId, accessToken) => {
 };
 
 const listFilesInFolderAsync = async (folderId, pageToken, accessToken) => {
+    console.log ( "helo i'm here ..")
+    console.log ( "helo i'm here in folderId..", folderId)
+    console.log ( "helo i'm here in pageToken", pageToken)
+    console.log ( "helo i'm here accessToken", accessToken)
     const auth = getClient(accessToken);
+    console.log ( "helo i'm here ......1")
     const driveClient = google.drive({ version: 'v3', auth });
+    console.log ( "helo i'm here ......2")
 
     const res = await driveClient.files.list({
         q: `'${folderId}' in parents and (mimeType='application/vnd.google-apps.folder' or mimeType='application/json')`,
         fields: 'nextPageToken, files(id, name, parents, mimeType)',
         pageSize: 10,
-        ...(pageToken ? { pageToken } : {})
+        ...(pageToken ? { pageToken: 1 } : {})
     });
+    console.log ( "helo i'm here ......3")
 
     return {
         folders: res.data.files,

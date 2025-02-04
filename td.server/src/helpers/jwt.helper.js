@@ -25,8 +25,8 @@ const createAsync = async (providerName, providerOptions, user) => {
         { expiresIn: '7d' } // 7 days
     );
 
-    console.log('Access token created:');
-    console.log('Refresh token created:');
+    console.log('Access token created:', accessToken);
+    console.log('Refresh token created:', refreshToken);
 
     return { accessToken, refreshToken };
 };
@@ -88,6 +88,7 @@ const verifyRefresh = (token) => {
 };
 
 export default {
+    decode,
     createAsync,
     verifyToken,
     verifyRefresh

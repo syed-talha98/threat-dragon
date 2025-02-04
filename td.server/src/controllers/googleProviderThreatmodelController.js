@@ -5,15 +5,24 @@ import responseWrapper from './responseWrapper.js';
 const logger = loggerHelper.get('controllers/googleProviderThreatmodelController.js');
 
 const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
+    console.log ( "heeelooooowww")
     const googleDrive = repositories.getSpecific('googledrive');
+    console.log ( "heeelooooowwwwwwwwwwww")
 
-    const pageToken = req?.query?.page || null;
+    const pageToken = req?.query?.page || 1;
     const folderId = req?.query?.folderId || 'root';
+    const accessToken = req.headers.authorization.split(' ')[1]; // Extract the accessToken from headers
+
+    if (!accessToken) {
+        throw new Error('Access token is missing');
+    }
+
     let foldersResp = {};
     let folders = [];
     let parentId = '';
-    
-    foldersResp = await googleDrive.listFilesInFolderAsync(folderId, pageToken, req.provider.access_token);
+    console.log ( "heeelooooowwwwwwwwwwww.....")
+    foldersResp = await googleDrive.listFilesInFolderAsync(folderId, pageToken, accessToken); // Use the extracted accessToken
+    console.log ( "heeelooooowwwwwwwwwwww.......testing")
     folders = foldersResp.folders;
 
     const pagination = {
@@ -24,7 +33,7 @@ const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
     if (folderId == 'root') {
         parentId = '';
     } else {
-        parentId = await googleDrive.getFolderParentIdAsync(folderId, req.provider.access_token);
+        parentId = await googleDrive.getFolderParentIdAsync(folderId, accessToken); // Use the extracted accessToken
     }
 
     return {

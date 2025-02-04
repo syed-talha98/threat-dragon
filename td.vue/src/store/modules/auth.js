@@ -13,7 +13,7 @@ export const clearState = (state) => {
     state.user = {};
 };
 
-const state = {
+export const state = {
     jwt: '',
     refreshToken: '',
     jwtBody: {},
@@ -48,8 +48,9 @@ const mutations = {
                 console.error('Invalid tokens received');
                 return;
             }
-
-
+    
+            console.log('Tokens received:', tokens); // Log the tokens
+    
             const { accessToken, refreshToken } = tokens;
             const tokenBody = accessToken.split('.')[1];
             const decodedBody = window.atob(tokenBody);
@@ -58,6 +59,8 @@ const mutations = {
             state.jwtBody = jwtBody;
             state.user = jwtBody.user;
             state.refreshToken = refreshToken;
+    
+            console.log('Access Token set in state:', state.jwt); // Log the accessToken in the state
         } catch (e) {
             console.error('Error decoding JWT', e);
             throw e;
