@@ -33,7 +33,7 @@ const listFilesInFolderAsync = async (folderId, pageToken, accessToken) => {
         q: `'${folderId}' in parents and (mimeType='application/vnd.google-apps.folder' or mimeType='application/json')`,
         fields: 'nextPageToken, files(id, name, parents, mimeType)',
         pageSize: 10,
-        ...(pageToken ? { pageToken: 1 } : {})
+        ...(pageToken ? { pageToken } : {})
     });
     console.log ( "helo i'm here ......3")
 

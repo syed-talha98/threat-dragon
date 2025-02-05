@@ -5,14 +5,11 @@ import responseWrapper from './responseWrapper.js';
 const logger = loggerHelper.get('controllers/googleProviderThreatmodelController.js');
 
 const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
-    console.log ( "heeelooooowww")
     const googleDrive = repositories.getSpecific('googledrive');
-    console.log ( "heeelooooowwwwwwwwwwww")
 
-    const pageToken = req?.query?.page || 1;
+    const pageToken = req?.query?.page || null;
     const folderId = req?.query?.folderId || 'root';
-    const accessToken = req.headers.authorization.split(' ')[1]; // Extract the accessToken from headers
-
+    const accessToken = req.provider.access_token; // Extract the accessToken from headers
     if (!accessToken) {
         throw new Error('Access token is missing');
     }
@@ -20,9 +17,8 @@ const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
     let foldersResp = {};
     let folders = [];
     let parentId = '';
-    console.log ( "heeelooooowwwwwwwwwwww.....")
     foldersResp = await googleDrive.listFilesInFolderAsync(folderId, pageToken, accessToken); // Use the extracted accessToken
-    console.log ( "heeelooooowwwwwwwwwwww.......testing")
+    console.log ( "find me.......")
     folders = foldersResp.folders;
 
     const pagination = {

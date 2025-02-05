@@ -33,11 +33,18 @@ const actions = {
         if (!folderId) commit(FOLDER_CLEAR);
         const pageToken = state.pageTokens[page - 1] || '';
         const resp = await googleDriveApi.folderAsync(folderId, pageToken);
-
+    
+        console.log("Fetched folders response:", resp.data); // Debug log
+    
+        if (!resp.data || !Array.isArray(resp.data.folders)) {
+            console.error("Invalid folder data:", resp.data);
+            return;
+        }
+    
         if (resp.data.pagination.nextPageToken && !state.pageTokens[page]) {
             state.pageTokens[page] = resp.data.pagination.nextPageToken;
         }
-
+    
         commit(FOLDER_FETCH, {
             'folders': resp.data.folders,
             'page': page,
@@ -60,14 +67,17 @@ const actions = {
 
 const mutations = {
     [FOLDER_CLEAR]: (state) => clearState(state),
-    [FOLDER_FETCH]: (state, { folders, page, pageNext, pagePrev, parentId, }) => {
-        state.all.length = 0;
-        folders.forEach((folder, idx) => Vue.set(state.all, idx, folder));
+    [FOLDER_FETCH]: (state, { folders, page, pageNext, pagePrev, parentId }) => {
+        state.all = [...folders];  // Instead of Vue.set()
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;
         state.parentId = parentId;
     },
+    
+    
+    
+    
     [FOLDER_SELECTED]: (state, folder) => {
         state.selected = folder;
     }
