@@ -2,16 +2,17 @@
     <div>
         <b-row>
             <b-col>
-                <div class="jumbotron text-center">
+                <b-container class="text-center p-4 bg-light rounded shadow-sm">
                     <h4>
                         {{ $t("dashboard.welcome.title") }}
                     </h4>
                     <p>
                         {{ $t("dashboard.welcome.description") }}
                     </p>
-                </div>
+                </b-container>
             </b-col>
         </b-row>
+
         <b-row>
             <td-dashboard-action
                 class="dashboard-action"

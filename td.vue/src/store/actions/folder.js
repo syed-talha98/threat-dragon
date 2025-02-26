@@ -1,6 +1,9 @@
 import googleDriveApi from '@/service/api/googleDriveApi.js';
 
+export const FOLDER_CLEAR = 'FOLDER_CLEAR';
 export const FOLDER_FETCH = 'FOLDER_FETCH';
+export const FOLDER_SELECTED = 'FOLDER_SELECTED';
+export const FOLDER_NAVIGATE_BACK = 'FOLDER_NAVIGATE_BACK';
 
 const actions = {
     [FOLDER_FETCH]: async ({ commit }, { page, folderId, accessToken }) => {
